@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Open the /etc/passwd file for reading
+exec 3< /etc/passwd
+
+# Read each line of the file and display the desired information
+while read -u 3 line
+do
+  # Use the cut command to extract the desired fields from each line
+  username=$(echo $line | cut -d: -f1)
+  userid=$(echo $line | cut -d: -f3)
+  home=$(echo $line | cut -d: -f6)
+
+  # Display the extracted fields
+  echo "Username: $username"
+  echo "User ID: $userid"
+  echo "Home Directory: $home"
+done
+
+# Close the file descriptor
+exec 3<&-
